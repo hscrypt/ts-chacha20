@@ -4,33 +4,33 @@
  */
 
 import test from 'tape'
-import JSChaCha20 from '../src/jschacha20'
+import Chacha20 from '../src/chacha20'
 
 /**
  * General Test
  */
-test("Class 'JSSalsa20' should exists", tape => {
+test("Class 'Chacha20' should exist", tape => {
   'use strict'
 
-  const salsa = new JSChaCha20(new Uint8Array(32), new Uint8Array(12))
-  tape.assert(salsa instanceof JSChaCha20)
+  const salsa = new Chacha20(new Uint8Array(32), new Uint8Array(12))
+  tape.assert(salsa instanceof Chacha20)
 
   tape.end()
 })
 
-test("Function 'encrypt' should exists", tape => {
+test("Function 'encrypt' should exist", tape => {
   'use strict'
 
-  const salsa = new JSChaCha20(new Uint8Array(32), new Uint8Array(12))
+  const salsa = new Chacha20(new Uint8Array(32), new Uint8Array(12))
   tape.assert(typeof salsa.encrypt === 'function')
 
   tape.end()
 })
 
-test("Function 'decrypt' should exists", tape => {
+test("Function 'decrypt' should exist", tape => {
   'use strict'
 
-  const salsa = new JSChaCha20(new Uint8Array(32), new Uint8Array(12))
+  const salsa = new Chacha20(new Uint8Array(32), new Uint8Array(12))
   tape.assert(typeof salsa.decrypt === 'function')
 
   tape.end()
@@ -43,7 +43,7 @@ test('When set key with length not 32 byte, error should be thrown', tape => {
   'use strict'
 
   tape.throws(() => {
-    new JSChaCha20(null, null)
+    new Chacha20(null, null)
   }, /Key should be 32 byte array!/)
 
   tape.end()
@@ -53,7 +53,7 @@ test('When set nonce with length not 12 byte, error should be thrown', tape => {
   'use strict'
 
   tape.throws(() => {
-    new JSChaCha20(new Uint8Array(32), null)
+    new Chacha20(new Uint8Array(32), null)
   }, /Nonce should be 12 byte array!/)
 
   tape.end()
@@ -63,7 +63,7 @@ test('When not bytes pass to encryt/decrypt method, error should be thrown', tap
   'use strict'
 
   tape.throws(() => {
-    new JSChaCha20(new Uint8Array(32), new Uint8Array(12)).encrypt(null)
+    new Chacha20(new Uint8Array(32), new Uint8Array(12)).encrypt(null)
   }, /Data should be type of bytes \(Uint8Array\) and not empty!/)
 
   tape.end()
@@ -81,8 +81,8 @@ test('Encrypt and decrypt for 256 byte should be same', tape => {
   const nonce = new Uint8Array(crypto.randomBytes(12))
   const data = new Uint8Array(crypto.randomBytes(4096))
 
-  const encoder = new JSChaCha20(key, nonce)
-  const decoder = new JSChaCha20(key, nonce)
+  const encoder = new Chacha20(key, nonce)
+  const decoder = new Chacha20(key, nonce)
 
   const encr = encoder.encrypt(data)
   const decr = decoder.decrypt(encr)
@@ -127,11 +127,11 @@ test('First block and param should be equal to reference', tape => {
   ])
 
   // encrypt
-  const encryptor = new JSChaCha20(key, nonce, counter)
+  const encryptor = new Chacha20(key, nonce, counter)
   const ciphertext = encryptor.encrypt(text)
 
   // decrypt
-  const decryptor = new JSChaCha20(key, nonce, counter)
+  const decryptor = new Chacha20(key, nonce, counter)
   const plaintext = decryptor.decrypt(ciphertext)
 
   tape.deepEqual(plaintext, text, 'Test text should be the same')
@@ -139,4 +139,3 @@ test('First block and param should be equal to reference', tape => {
   tape.deepEqual(encryptor._keystream, decryptor._keystream, 'Keystream should be the same for encryptor and decryptor')
   tape.end()
 })
-

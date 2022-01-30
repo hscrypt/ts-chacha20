@@ -1,8 +1,8 @@
 {
-  "name": "js-chacha20",
-  "version": "1.1.0",
-  "description": "Pure JavaScript ChaCha20 stream cipher",
-  "main": "src/jschacha20.js",
+  "name": "ts-chacha20",
+  "version": "1.2.0",
+  "description": "Typescript ChaCha20 stream cipher",
+  "main": "build/src/chacha20.js",
   "directories": {
     "test": "test",
     "src": "src"
@@ -23,12 +23,13 @@
     "tap-spec": "^4.1.1",
     "tape": "^4.6.3",
     "tape-watch": "^2.2.4",
+    "typescript": "^4.5.5",
     "uglify-js": "^2.7.5"
   },
   "scripts": {
-    "test": "tape -r babel-register test/**/*.test.js | tap-spec",
+    "test": "tape -r babel-register build/test/**/*.test.js | tap-spec",
     "watch": "tape-watch test/**/*.test.js -r babel-register -p tap-spec",
-    "lint": "standard ./src/jschacha20.js"
+    "lint": "standard src/chacha20.ts"
   },
   "repository": {
     "type": "git",

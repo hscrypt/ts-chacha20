@@ -3,78 +3,52 @@
  * 2017-01-25
  */
 
-import test from 'tape'
-import Chacha20 from '../src/chacha20'
+import { Chacha20 } from '../src/chacha20'
+import 'jest-expect-message'
 
 /**
  * General Test
  */
-test("Class 'Chacha20' should exist", tape => {
-  'use strict'
-
+test("Class 'Chacha20' should exist", () => {
   const salsa = new Chacha20(new Uint8Array(32), new Uint8Array(12))
-  tape.assert(salsa instanceof Chacha20)
-
-  tape.end()
+  expect(salsa instanceof Chacha20).toBe(true)
 })
 
-test("Function 'encrypt' should exist", tape => {
-  'use strict'
-
+test("Function 'encrypt' should exist", () => {
   const salsa = new Chacha20(new Uint8Array(32), new Uint8Array(12))
-  tape.assert(typeof salsa.encrypt === 'function')
-
-  tape.end()
+  expect(typeof salsa.encrypt).toBe('function')
 })
 
-test("Function 'decrypt' should exist", tape => {
-  'use strict'
-
+test("Function 'decrypt' should exist", () => {
   const salsa = new Chacha20(new Uint8Array(32), new Uint8Array(12))
-  tape.assert(typeof salsa.decrypt === 'function')
-
-  tape.end()
+  expect(typeof salsa.decrypt).toBe('function')
 })
 
 /**
  * Errors handlers
  */
-test('When set key with length not 32 byte, error should be thrown', tape => {
-  'use strict'
-
-  tape.throws(() => {
+test('When set key with length not 32 byte, error should be thrown', () => {
+  expect(() => {
     new Chacha20(null, null)
-  }, /Key should be 32 byte array!/)
-
-  tape.end()
+  }, "Key should be 32 byte array!").toThrow()
 })
 
-test('When set nonce with length not 12 byte, error should be thrown', tape => {
-  'use strict'
-
-  tape.throws(() => {
+test('When set nonce with length not 12 byte, error should be thrown', () => {
+  expect(() => {
     new Chacha20(new Uint8Array(32), null)
-  }, /Nonce should be 12 byte array!/)
-
-  tape.end()
+  }, "Nonce should be 12 byte array!").toThrow()
 })
 
-test('When not bytes pass to encryt/decrypt method, error should be thrown', tape => {
-  'use strict'
-
-  tape.throws(() => {
+test('When not bytes pass to encryt/decrypt method, error should be thrown', () => {
+  expect(() => {
     new Chacha20(new Uint8Array(32), new Uint8Array(12)).encrypt(null)
-  }, /Data should be type of bytes \(Uint8Array\) and not empty!/)
-
-  tape.end()
+  }, "Data should be type of bytes \(Uint8Array\) and not empty!").toThrow()
 })
 
 /**
  * Encrypt / Decrypt
  */
-test('Encrypt and decrypt for 256 byte should be same', tape => {
-  'use strict'
-
+test('Encrypt and decrypt for 256 byte should be same', () => {
   const crypto = require('crypto')
 
   const key = new Uint8Array(crypto.randomBytes(32))
@@ -87,16 +61,12 @@ test('Encrypt and decrypt for 256 byte should be same', tape => {
   const encr = encoder.encrypt(data)
   const decr = decoder.decrypt(encr)
 
-  tape.deepEqual(encoder.param, decoder.param, 'Parameters should be equivalent')
-  tape.deepEqual(data, decr, 'Decrypted data should be the same as input')
-  tape.deepEqual([64, 64], [encoder._param[12], decoder._param[12]], 'Counter should be equal 64')
-
-  tape.end()
+  expect(encoder.param, 'Parameters should be equivalent').toEqual(decoder.param)
+  expect(data, 'Decrypted data should be the same as input').toEqual(decr)
+  expect([encoder._param[12], decoder._param[12]], 'Counter should be equal 64').toEqual([64, 64])
 })
 
-test('First block and param should be equal to reference', tape => {
-  'use strict'
-
+test('First block and param should be equal to reference', () => {
   const key = new Uint8Array([
     0x00, 0x01, 0x02, 0x03, 0x04,
     0x05, 0x06, 0x07, 0x08, 0x09,
@@ -134,8 +104,7 @@ test('First block and param should be equal to reference', tape => {
   const decryptor = new Chacha20(key, nonce, counter)
   const plaintext = decryptor.decrypt(ciphertext)
 
-  tape.deepEqual(plaintext, text, 'Test text should be the same')
-  tape.deepEqual(encryptor._param, decryptor._param, 'Param should be the same for encryptor and decryptor')
-  tape.deepEqual(encryptor._keystream, decryptor._keystream, 'Keystream should be the same for encryptor and decryptor')
-  tape.end()
+  expect(plaintext, 'Test text should be the same').toEqual(text)
+  expect(encryptor._param, 'Param should be the same for encryptor and decryptor').toEqual(decryptor._param)
+  expect(encryptor._keystream, 'Keystream should be the same for encryptor and decryptor').toEqual(decryptor._keystream)
 })

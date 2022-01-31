@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "outDir": "build",
-    "declaration": true,  
+    "declaration": true,
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "commonjs",
     "sourceMap": true,
     "target": "es5",
     "allowJs": true,

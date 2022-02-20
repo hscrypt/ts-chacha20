@@ -3,10 +3,9 @@
   "version": "1.2.0-rc.1",
   "description": "Typescript ChaCha20 stream cipher",
   "main": "build/src/chacha20.js",
-  "directories": {
-    "test": "test",
-    "src": "src"
-  },
+  "files": [
+    "build"
+  ],
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",

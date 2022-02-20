@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/runsascoded/js-chacha20.git"
+    "url": "git+https://github.com/hscrypt/ts-chacha20.git"
   },
   "keywords": [
     "cryptography",
@@ -41,7 +41,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/runsascoded/js-chacha20/issues"
+    "url": "https://github.com/hscrypt/ts-chacha20/issues"
   },
-  "homepage": "https://github.com/runsascoded/js-chacha20#readme"
+  "homepage": "https://github.com/hscrypt/ts-chacha20#readme"
 }

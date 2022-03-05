@@ -42,7 +42,7 @@ const nonce = Uint8Array([...]); // 12 bytes nonce
 const message = Uint8Array([...]); // some data as bytes array
 
 // Encrypt //
-const encrypt = new Jschacha20(key, nonce).encrypt(message);
+const encrypt = new Chacha20(key, nonce).encrypt(message);
 
 // now encrypt contains bytes array of encrypted message
 ```
